@@ -1,39 +1,5 @@
 module.exports = [
-  {
-      "name": "深圳市赫尔诺电子技术有限公司",
-      "url": "http://www.led-hero.cn",
-      "task_type": "call",
-      "web_type": "baidu_lxb",
-      "id": "call_baidu_lxb_id_100"
-  },
-  {
-      "name": "本溪满族自治县山农果品专业合作社",
-      "url": "http://snzzm.com/",
-      "task_type": "call",
-      "web_type": "baidu_lxb",
-      "id": "call_baidu_lxb_id_101"
-  },
-  {
-      "name": "本溪满族自治县山农果品专业合作社",
-      "url": "http://snzzm.com/",
-      "task_type": "call",
-      "web_type": "baidu_lxb",
-      "id": "call_baidu_lxb_id_102"
-  },
-  {
-      "name": "深圳市卓京影业有限公司",
-      "url": "http://www.zj99.cn/",
-      "task_type": "call",
-      "web_type": "baidu_lxb",
-      "id": "call_baidu_lxb_id_103"
-  },
-  {
-      "name": "上海策企信息科技有限公司",
-      "url": "http://www.cqhouse168.com",
-      "task_type": "call",
-      "web_type": "baidu_lxb",
-      "id": "call_baidu_lxb_id_104"
-  },
+
   {
       "name": "南京新视线教育信息咨询有限公司",
       "url": "http://waiyu.xinshixianjiaoyu.com",

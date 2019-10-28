@@ -2,3 +2,5 @@ node_modules
 dist
 google.png
 app-asar
+dist_mac
+dist_win
