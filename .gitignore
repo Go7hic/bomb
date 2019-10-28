@@ -4,3 +4,5 @@ google.png
 app-asar
 dist_mac
 dist_win
+yarn.lock
+package-lock.json

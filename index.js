@@ -12,18 +12,7 @@ const target = {
   "address": "",
   "comment": "wwww"
 }
-// async function getPic(url) {
-//   const browser = await puppeteer.launch({
-//     headless: false,
-//     slowMo: 250
-//   });
-//   const page = await browser.newPage();
-//   await page.goto(url);
-//   await page.setViewport({ width: 1200, height: 800 });
-//   await page.screenshot({ path: 'google2.png' });
 
-//   await browser.close();
-// }
 var TASK_STATUS = {
   done: 'done',
   locked: 'locked',
