@@ -1,5 +1,5 @@
 const app = require('electron').remote.app,
-  path = require('path'),
+  // path = require('path'),
   fs = require('fs'),
   dialog = require('electron').remote.dialog,
   BrowserWindow = require('electron').remote.BrowserWindow,
@@ -34,8 +34,9 @@ var ATTACK = {
   "time": "0 2 * * * *",
   "web_type": "baidu_lxb",
   "task_type": "call", // "comment"
-  "interval": 300000
+  "interval": 30000
 };
+document.getElementById('count').innerText = DATA.length;
 // 初始chrome
 async function init (attack) {
   // const chromium = config.get('chromium');
@@ -52,29 +53,37 @@ async function init (attack) {
 }
 // 执行任务
 async function task(page, item) {
+  var result = {
+    status: '',
+    msg: ''
+  };
   await page.goto(item.url);
-  await page.type('.lxb-cb-input', target.phone, {delay: 10});
-  // await page.type(String.fromCharCode(13));
-  await page.keyboard.press('Enter')
-  // await page.type('.lxb-cb-input-btn');
-  // const inputElement = await page.$('.lxb-cb-input-btn');
-  // await inputElement.click();
-  // await page.click('.lxb-cb-input-btn');
-  await page.waitFor(1 * 1000);
-  // let result = {
-  //     status: TASK_STATUS.failed,
-  //     msg: ''
-  // };
+  try {
+      
+    await page.type('.lxb-cb-input', target.phone, {delay: 10});
+    await page.keyboard.press('Enter')
+    await page.waitFor(1 * 1000);
+    try {
+      result.msg = await page.$eval('.lxb-cb-tip', e => e.innerText);
+    } catch (e) {
+        try {
+            result.msg = await page.$eval('.lxb-cb-info-tip-con', e => e.innerText);
+        } catch (e) {
+            try {
+                result.msg = await page.$eval('.lxb-cb-error-tip', e => e.innerText);
+            } catch (e) {
+                result.msg = `[MSG ERROR] ${e}`;
+            }
+        }
+    }
+  } catch (e) {
+    result.msg = `[TYPE ERROR] ${e}`;
+  }
+  result.status = getTaskResult(result.msg);
 
-  // try {
-  //     await page.goto(item.url);
-  //     result = await flow[item.task_type][item.web_type](page, item, config.get('target'));
-  // } catch (e) {
-  //     result.msg = `[TIME OUT ERROR] ${e}`;
-  // }
-
-  // return result;
+  return result;
 }
+
 let index = 0;
 async function run(attack) {
   const {browser, page} = await init(attack);
@@ -91,7 +100,14 @@ async function run(attack) {
       console.log(`==================TASK TIMES: ${index}==================`.yellow)
       console.log(`TASK INFO:`.yellow, `WEB NAME: ${item.name} WEB TYPE: ${item.web_type}`.green);
 
-      await task(page, item);
+      let result = await task(page, item);
+      
+      o[result.status] ++;
+      if (result.status == TASK_STATUS.failed) {
+        sleepTime = 0;
+      } else {
+          // url_list_to_save.push(item);
+      }
       // let result = await task(page, item);
 
       // o[result.status] ++;
@@ -129,3 +145,18 @@ document.getElementById('start').addEventListener('click', function() {
   // console.log('start');
   // getPic('https://www.baidu.com');
 });
+
+
+function getTaskResult(text) {
+  let status = TASK_STATUS.failed;
+  let doneReg = /已短信提醒|正在呼叫|将给您回电|请准备接听/g;
+  let lockedReg = /过于频繁|频繁/g;
+
+  if (doneReg.test(text)) {
+      status = TASK_STATUS.done;
+  } else if (lockedReg.test(text)) {
+      status = TASK_STATUS.locked;
+  }
+
+  return status;
+}

@@ -1,19 +1,19 @@
 {
-  "name": "electron-puppeteer-quick-start",
+  "name": "bomb",
   "version": "1.0.0",
   "description": "A minimal Electron application with puppeteer",
   "main": "main.js",
   "scripts": {
-    "package": "electron-packager ./ bomb --out ./dist --overwrite --icon=./icon.ico",
+    "package": "rm -rf dist && electron-packager ./ --platform=all --out=dist ",
     "start": "electron .",
     "extract:mac": "rm -rf app-asar && asar extract 'dist/mac/electron-puppeteer-quick-start.app/Contents/Resources/app.asar' app-asar",
-    "build": "rm -rf dist && electron-builder build --m --x64",
-    "build-w": "rm -rf dist && electron-builder build --win --x64",
+    "build": "rm -rf dist && electron-builder --m --x64",
+    "build-w": "rm -rf dist && electron-builder --win --x64",
     "open": "open dist/mac/electron-puppeteer-quick-start.app/Contents/MacOS/electron-puppeteer-quick-start"
   },
   "build": {
     "productName": "bomb",
-    "appId": "org.develar.go7hic",
+    "appId": "org.develar.bomb",
     "dmg": {
       "contents": [
         {
@@ -45,13 +45,7 @@
     },
     "directories": {
       "buildResources": "resources",
-      "output": "release"
-    },
-    "publish": {
-      "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate",
-      "private": false
+      "output": "dist"
     }
   },
   "repository": "https://github.com/Raidus/electron-puppeteer-quick-start",
@@ -70,6 +64,7 @@
   "devDependencies": {
     "asar": "^0.14.3",
     "electron": "^7.0.0",
-    "electron-builder": "20.22.1"
+    "electron-builder": "^21.2.0",
+    "electron-packager": "^14.0.6"
   }
 }
