@@ -1,0 +1,40 @@
+body {
+  text-align: center;
+  font-size: 14px;
+}
+.form {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+#start {
+ width: 295px;
+ height: 40px;
+ margin: 0 auto;
+ text-align: center;
+ line-height: 40px;
+ background: #1890ff;
+ color: #fff;
+ cursor: pointer;
+}
+label {
+  display: block;
+  margin-bottom: 15px;
+}
+label span {
+  width: 80px;
+  display: inline-block;
+  text-align: left;
+}
+label input {
+  width: 200px;
+  height: 36px;
+  border: 1px solid #d8d8d8;
+  padding-left: 10px;
+  font-size: 14px;
+}
+input:focus {
+  border: 1px solid #d8d8d8;
+  outline: 0;
+}
+
